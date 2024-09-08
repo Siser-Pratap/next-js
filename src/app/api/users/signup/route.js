@@ -19,6 +19,17 @@ export async function POST(req){
             return NextRequest.json({error: "User already exists"}, {status:400});
         }
 
+        //hashed password
+        const salt = await bcryptjs.genSalt(10);
+        const hashedPassword = await bcryptjs.hash(password, salt);
+
+        const newUser = new User({username, email, password:hashedPassword});
+
+        const savedUser = await newUser.save();
+
+        console.log(savedUser);
+
+        return NextRequest.json({message:"New user saved",success:true, savedUser});
 
     }
     catch(error){
