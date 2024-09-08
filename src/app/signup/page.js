@@ -3,17 +3,18 @@ import Link from "next/link";
 import {react} from "react";
 import {useState} from "react";
 import {useEffect} from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import axios from "axios";
 
 
 const SignupPage = () => {
 
 
-    // const router = useRouter();
+    const router = useRouter();
 
     
     const [buttonDisabled, setButtonDisabled] = useState(false);
+    const [loading, setloading] = useState(false);
     const[user, setUser] = useState({
         email:"",
         password:"",
@@ -21,6 +22,20 @@ const SignupPage = () => {
     });
 
     const onSignup = async() => {
+
+        try{
+            setloading(true);
+            const response = await axios.post("/api/users/signup", user);
+            console.log(response.data);
+            router.push("/login");
+
+        }
+        catch(err){
+            console.log({"SignUp failed": err.message});
+        }
+        finally{
+            setloading(false);
+        }
 
         }
 
@@ -46,7 +61,7 @@ const SignupPage = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
-    <h1>SignUp</h1>
+    <h1>{loading ? "Processing":"SignUp"}</h1>
     <hr />
     <label htmlFor="username">username</label>
     

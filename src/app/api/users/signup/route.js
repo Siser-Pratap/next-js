@@ -12,11 +12,13 @@ export async function POST(req){
         const reqBody = await req.json();
         const {username, email, password} = reqBody;
 
-        const user = User.findOne({email:email});
+        console.log("User",reqBody);
+
+        const user =await User.findOne({email:email});
 
         // check if user already exists
         if (user){
-            return NextRequest.json({error: "User already exists"}, {status:400});
+            return NextResponse.json({error: "User already exists"}, {status:400});
         }
 
         //hashed password
@@ -27,9 +29,9 @@ export async function POST(req){
 
         const savedUser = await newUser.save();
 
-        console.log(savedUser);
+        console.log("SavedUser",savedUser);
 
-        return NextRequest.json({message:"New user saved",success:true, savedUser});
+        return NextResponse.json({message:"New user saved",success:true, savedUser});
 
     }
     catch(error){
