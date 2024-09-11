@@ -1,5 +1,5 @@
-import { dbConfig } from "@/app/dbConfig/dbConfig.js"; 
-import User from "@/app/models/userModel.js";
+import { dbConfig } from "../../../dbConfig/dbConfig";
+import User from "../../../models/userModel";
 import { NextRequest, NextResponse } from "next/server";
 import bcryptjs from "bcryptjs";
 
