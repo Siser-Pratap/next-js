@@ -26,7 +26,9 @@ export default function ProfilePage(){
 
 
     const getUserDetails = async() => {
+        
         const res = await axios.get("/api/users/me");
+        console.log("Hello");
         console.log(res);
         console.log(res.data);
         setData(res.data.data._id);
