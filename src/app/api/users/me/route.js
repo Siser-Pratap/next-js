@@ -1,12 +1,16 @@
 import { NextResponse } from "next/server";
 import { getDataFromToken } from "../../../helpers/getDataFromToken";
-import {User} from "../../../models/userModel.js";
+import User from "../../../models/userModel";
 
 export async function GET(req){
     try {
 
-        const userId = getDataFromToken(req);
-        const newUser = User.findOne({_id: userId}).select("-password");
+        const id = getDataFromToken(req);
+        console.log(id);
+        
+        const newUser = await User.findOne({_id: id}).select("-password");
+        // console.log(newUser);
+        
         return NextResponse.json({message:"User found", data:newUser});
         
         

@@ -11,7 +11,7 @@ export async function POST(req){
     const reqBody = await req.json();
     const {email, password} = reqBody;
 
-    const user = User.findOne({email: email});
+    const user = await User.findOne({email: email});
 
     if(!user){
         return NextResponse.json({message:"User does not exist"}, {status: 404});
@@ -36,6 +36,7 @@ export async function POST(req){
      response.cookies.set("token", token, {
         httpOnly:true,
      })
+    //  console.log(token);
      return response;
      
     }

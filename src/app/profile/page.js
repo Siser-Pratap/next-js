@@ -9,6 +9,8 @@ export default function ProfilePage(){
 
     const router= useRouter();
 
+    const [data, setData] = useState("Nothing");
+
 
     const logout = async() => {
         try {
@@ -23,6 +25,14 @@ export default function ProfilePage(){
     }
 
 
+    const getUserDetails = async() => {
+        const res = await axios.get("/api/users/me");
+        console.log(res);
+        console.log(res.data);
+        setData(res.data.data._id);
+    }
+
+
 
 
 
@@ -34,11 +44,15 @@ export default function ProfilePage(){
         <h1>Profile</h1>
         <hr />
         <p>Profile page</p>
-        <hr />
+        <h2 className="p-1 rounded bg-green-500">{data === "Nothing" ? "User not logged in" : <Link href={`/profile/${data}`}>{data}</Link>}</h2>
         <button
         onClick={logout}
         className="bg-blue-500 mt-4 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
         >Logout</button>
+        <button
+        onClick={getUserDetails}
+        className="bg-green-800 mt-4 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >GetUser Details</button>
           </div>
     )
 }

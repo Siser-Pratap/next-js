@@ -21,7 +21,7 @@ export function middleware(request) {
         console.log('Redirecting to /login because unauthenticated user is on a protected path.');
         return NextResponse.redirect(new URL("/login", request.nextUrl));
     }
-    return NextResponse.next();
+    // return NextResponse.next();
 
 }
  
